@@ -1,0 +1,133 @@
+public class BinTree {
+
+	// height of the tree
+	private int height = 0;
+	// number of elements stored in tree
+	private int size = 0;
+	TrieNode< String > root;
+
+	// constructors
+	
+	public BinTree() {
+	}
+	// TODO Auto-generated constructor stub
+
+	public myList<String> trieToList() {
+		myList<String> list = new myList<>();
+		inorder(root, list);
+		return list;
+	}
+
+	public void print() {
+		myList<String> list = trieToList();
+
+		for (int i = list.size() - 1; i >= 0; i--) {
+			System.out.print(list.getElement(i) + "");
+		}
+
+		System.out.println();
+	}
+
+	private void inorder( TrieNode< String > node, myList<String> list) {
+		if (node == null) {
+			return;
+		}
+		
+		inorder(node.left(), list);
+		
+		if (node.element() != null) {
+			list.append(node.element());
+		}
+
+		inorder(node.right(), list);
+	}
+
+	public void largest() {
+		if (root == null) {
+			String k = right(root);
+			System.out.println(k);
+			return;
+		}
+	}
+
+	public void smallest() {
+		if (root == null) {
+			String k = left(root);
+			System.out.println(k);
+			return;
+		}
+	}
+
+	private String right(TrieNode< String > node) {
+		if(node.element() != null) {
+			return right(node.right());
+		}
+		
+		if( node.right() == null ) {
+			return right( node.left() );
+		}
+		
+		return right( node.right() );
+	}
+
+	private String left(TrieNode< String > node) {
+		if (node.element() != null) {
+			return node.element();
+		}
+
+		if (node.left() == null) {
+			return left(node.right());
+		}
+
+		return left(node.left());
+	}
+
+	public void search(String str) {
+		int level = 0;
+		char[] c = str.toCharArray();
+		int keySearch;
+		TrieNode< String > current = root;
+
+		if (root == null) {
+			return;
+		}
+
+		while (!current.isLeaf()) {
+
+			keySearch = Integer.parseInt(Character.toString(c[level++]));
+
+			if (keySearch == 0) {
+
+				if (current.left() == null) {
+
+					current = current.right();
+					continue;
+				}
+
+				current = current.left();
+			}
+
+			else if (keySearch == 1) {
+
+				if (current.right() == null) {
+
+					current = current.left();
+					continue;
+				}
+
+				current = current.right();
+			}
+		}
+
+		System.out.println(current.element());
+	}
+
+	public void size() {
+		System.out.println(this.size);
+	}
+
+	public void height() {
+		System.out.println(this.height);
+	}
+
+}
