@@ -1,0 +1,38 @@
+
+public class myList<T> {
+	private LinkNode< T > head;
+	private LinkNode< T > tail;
+	public LinkNode< T > curr;
+	private int size;
+	
+	public myList() {
+		head = tail = new LinkNode<>( null );
+		size = 0;
+	}
+	
+	public void append( T element ) {
+		tail.setNext( new LinkNode< T >( element,  tail.next() ) );
+		size++;
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public T getElement( int pos ) {
+		moveToPos( pos );
+		if( curr.next() == null ) {
+			return null;
+		}
+		
+		return curr.next().element();
+	}
+	
+	private void moveToPos(  int pos  ) {
+		curr = head;
+		for( int i = 0; i < pos; i++ ) {
+			curr = curr.next();
+		}
+	}
+
+}
