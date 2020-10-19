@@ -1,0 +1,32 @@
+
+public class LinkNode<T> {
+	private LinkNode< T > next;
+	private T element;
+	
+	public LinkNode( LinkNode< T > next  ) {
+		this.element = null;
+		this.next = next;
+	}
+	
+	public LinkNode( T element, LinkNode< T > next ) {
+		this.next = next;
+		this.element = element;
+	}
+	
+	public LinkNode< T > next() {
+		return this.next;
+	}
+	
+	public void setNext( LinkNode< T > next ) {
+		this.next = next;
+	}
+	
+	public T element() {
+		return this.element;
+	}
+	
+	public void setElement( T element ) {
+		this.element = element;
+	}
+
+}
