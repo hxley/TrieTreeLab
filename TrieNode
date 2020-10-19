@@ -1,0 +1,290 @@
+
+public class TrieNode<S> {
+	private int key;
+	private S element;
+	private TrieNode< S > right;
+	private TrieNode< S > left;
+	private int height = 0;
+	
+	public TrieNode( S element, TrieNode< S > left, TrieNode< S > right ) {
+		this.element = element;
+		this.key = key;
+		this.right = right;
+		this.left = left;
+	}
+	
+	public TrieNode() {
+		this.right = this.left = null;
+	}
+
+	public int key() {
+		return this.key;
+	}
+	
+	public S element() {
+		return this.element;
+	}
+	
+	public void setElement( S element ) {
+		this.element = element;
+	}
+	
+	public TrieNode< S > left() {
+		return this.left;
+	}
+	
+	public TrieNode< S > right() {
+		return this.right;
+	}
+	
+	public void setLeft( TrieNode< S > left ) {
+		this.left = left;
+	}
+	
+	public void setRight( TrieNode< S > right ) {
+		this.right = right;
+	}
+	
+	public boolean isLeaf() {
+		return ( this.right == null && left == null );)
+	}
+	
+	public int height() {
+		return this.height;
+	}
+
+	// implemented method to return true or false if the element is inserted in the
+	// tree
+	public boolean insert( String str ) {
+		int level = 0;
+		//this char creates an array of characters of the bit string
+		char [] c = str.toCharArray();
+		int keyInsert;
+		
+		//method changing the character of the bit-string to integer
+		keyInsert = Integer.parseInt( Character.toString( c[ level ] ) );
+		
+		//if the root is null, the following method will determine inserts left or right
+		TrieNode root;
+		if( root == null ) {
+			root = new TrieNode<>();
+			
+			if( keyInsert == 0 ) {
+				root.setLeft( new TrieNode<>( str, null, null ) );
+			}
+			
+			else {
+				root.setLeft( new TrieNode<>( str, null, null ));
+			}
+			
+			size++;
+			height++;
+			return true;
+		}
+		
+		else if ( root != null ) {
+			//method creating a current ( which starts on the root ) to iterate in tree
+			TrieNode< String > current = root;
+			
+			//method to move to the left or to the right if keyInsert is either 0 or 1
+			if ( keyInsert == 0 ) {
+				
+				while ( current.element() == null && level < c.length ) {
+					keyInsert = Integer.parseInt( Character.toString( c[ level++ ] ) );
+					
+					if( keyInsert == 0 ) {
+						
+						if( current.left() == null ) {
+							current.setLeft( new TrieNode<>( str, null, null ) );
+							size++;
+							level++;
+							
+							if( height < level + 1 ) {
+								
+								height = level + 1;
+							}
+							
+							return true;
+						}
+						
+						current = current.left();
+					}
+				
+				else {
+					
+					if( current.right() == null ) {
+						current.setRight( new TrieNode<>( str, null, null ) );
+						size++;
+						level++;
+						if( height < level + 1  ) {
+							
+							height = level + 1;
+						}
+						
+						return true;
+					}
+					
+					current = current.right();
+				}
+				}
+				
+				keyInsert = Integer.parseInt( Character.toString( c[ level ] ) );
+				String temp = current.element();
+				char [] tempC = temp.toCharArray();
+				int keyCurrent = Integer.parseInt( Character.toString( tempC[ level ] ) );
+				
+				current.setElement( null );
+				while( keyCurrent == keyInsert && level < c.length ) {
+					
+					if( keyInsert == 0 ) {
+						
+						current.left();
+					}
+					
+					else {
+						
+						current.right();
+					}
+					
+					keyInsert = Integer.parseInt( Character.toString( c[ level ] ) );
+					keyCurrent = Integer.parseInt( Character.toString( tempC[ level ] ) );
+					level++;
+				}
+				
+				if( keyInsert == 0 && keyCurrent == 1 ) {
+					current.setLeft( new TrieNode<>( str, null, null ) );
+					current.setRight( new TrieNode<>( temp, null, null ) );
+					size++;
+					level;
+					
+					if( height < level + 1 ) {
+						height = level;
+					}
+				}
+				
+				else if ( keyInsert == 1 && keyCurrent == 0 ) {
+					current.setRight( new TrieNode<>( str, null, null ) );
+					current.setLeft( new TrieNode<>( temp, null, null ) );
+					size++;
+					level++;
+					
+					if( height < level + 1 ) {
+						
+						height = level + 1;
+					}
+				}
+				
+				return true;
+			}
+		
+		else {
+			
+			while ( current.element() == null && level < c.length ) {
+				keyInsert = Integer.parseInt( Character.toString( c[ level++ ] ) );
+				
+				if( keyInsert == 0 ) {
+					if( current.left() == null ) {
+						current.setLeft(  new TrieNode<>( str, null, null  ) );
+						size++;
+						level++;
+						
+						if( height < level + 1 ) {
+							height = level + 1;
+						}
+						
+						return true;
+					}
+					
+					current = current.left();
+				}
+				
+				else {
+					
+					if( current.right() == null ) {
+						current.setRight( new TrieNode<>( str, null, null ) );
+						size++;
+						level++;
+						
+						if( height < level + 1 ) {
+							height = level + 1;
+						}
+						
+						return true;
+					}
+					
+					current = current.right();
+				}
+			}
+			
+			else {
+				
+				if( current.right() == null ) {
+					
+					current.setRight( new TrieNode<>( str, null, null ) );
+					size++;
+					level++;
+					
+					if( height < level + 1 ) {
+						height = level + 1;
+					}
+					
+					return true;
+				}
+				
+				current = current.right();
+			}
+			}
+		
+		keyInsert = Integer.parseInt( Character.toString( c[ level ] ) );
+		String temp = current.element();
+		char [] tempC = temp.toCharArray();
+		int keyCurrent = Integer.parseInt( Character.toString( tempC[ level ] ) );
+		
+		System.out.println( keyCurrent );
+		System.out.println( keyInsert );
+		
+		current.setElement( null );
+		
+		while( keyCurrent == keyInsert && level < c.length ) {
+			if ( keyInsert == 0 ) {
+				current.left();
+			}
+			
+			else {
+				current.right();
+			}
+			
+			keyInsert = Integer.parseInt( Character.toString( c[ level ] ) );
+			keyCurrent = Integer.parseInt( Character.toString( tempC[ level ] ) );
+			level++;
+		}
+		
+		if( keyInsert == 0 && keyCurrent == 1 ) {
+			current.setLeft( new TrieNode<>( str, null, null ) );
+			current.setRight( new TrieNode<>( temp, null, null ) );
+			size++;
+			level++;
+		}
+		
+		else if ( keyInsert == 1 && keyCurrent == 0 ) {
+			current.setRight( new TrieNode<>( str, null, null ) );
+			current.setLeft( new TrieNode<>( temp, null, null ) );
+			size++;
+			level;
+			System.out.println( " reached a fianl and successful node. " );
+		}
+		
+		if ( height < level + 1 ) {
+			height = level + 1;
+		}
+		
+		
+		return true;
+		}
+			
+	}
+	
+	
+	}
+
+}
